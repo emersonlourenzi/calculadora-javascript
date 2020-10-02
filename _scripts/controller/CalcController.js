@@ -7,6 +7,7 @@ class CalcController {
         this._hourEl = document.querySelector("#hour");
         this._currentDate;
         this.initialize();
+        this.initButtonsEvents();
     }
 
     initialize() {
@@ -18,18 +19,36 @@ class CalcController {
                 month: "long",
                 year: "numeric"
             });
-        }, true);
+        }, 0);
 
-        setTimeout(() => {
-            alert(`ACESSE: \nhttp://curriculo.emerson.lourenzi.net`);
-        }, 2000);
+        // setTimeout(() => {
+        //     alert(`ACESSE: \nhttp://curriculo.emerson.lourenzi.net`);
+        // }, 2000);
+        //
+        // setTimeout(() => {
+        //     if (window.confirm('Acesse a page')) {
+        //         window.open('http://curriculo.emerson.lourenzi.net', '_blank');
+        //     }
+        // }, 10000);
 
-        setTimeout(() => {
-            if (window.confirm('Acesse a page')) {
-                window.open('http://curriculo.emerson.lourenzi.net', '_blank');
-            }
-        }, 10000);
+    }
 
+    addEventListenerAll(element, events, fn) {
+        events.split(' ').forEach(event => {
+            element.addEventListener(event, fn, false);
+        });
+    }
+
+    initButtonsEvents() {
+        let buttons = document.querySelectorAll("#buttons > g, #parts > g");
+        buttons.forEach((btn,index) => {
+            this.addEventListenerAll(btn, 'click drag', e => {
+                console.log(btn.className.baseVal.replace("btn-", ""));
+            });
+            this.addEventListenerAll(btn, "mouseover mouseup mousedown", e => {
+                btn.style.cursor = "pointer";
+            });
+        });
     }
 
     get displayDate() {
